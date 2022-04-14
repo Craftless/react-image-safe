@@ -1,0 +1,12 @@
+.outerContainer {
+  display: flex;
+  padding: 16px;
+  margin: 16px;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.formContainer {
+  flex: 1;
+  
+}

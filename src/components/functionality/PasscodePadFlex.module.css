@@ -3,6 +3,7 @@
   flex-direction: column;
   flex: 1;
   align-items: center;
+  justify-content: center;
   padding: 8px;
   /* margin: 0 180px; */
 }
@@ -16,6 +17,10 @@
   border-bottom: 1px solid gray;
   padding: 6px;
 }
+.passcodeTextContainer label {
+  font-family: inherit;
+  font-size: 2rem;
+}
 
 .passcodeText {
   border: 0;
@@ -23,7 +28,7 @@
   background: 0;
   font-family: inherit;
   font-weight: bold;
-  font-size: 1.5rem;
+  font-size: 2rem;
   transition: 0.2s border-bottom-color;
   overflow-x: auto;
 }
@@ -40,7 +45,7 @@
   margin: 1px;
   flex-grow: 1;
   flex-shrink: 1;
-  width: 1rem;
+  width: 1.5rem;
   box-sizing: border-box;
   align-self: center;
 }

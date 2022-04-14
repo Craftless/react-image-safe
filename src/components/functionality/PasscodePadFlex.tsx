@@ -71,21 +71,21 @@ function PasscodePadFlex() {
           readOnly
         />
       </div>
-      <div>
-        <div className={classes.buttonsContainer}>
-          {buttonsText.map((item) => {
-            return (
-              <div className={classes.buttonContainer} key={item}>
-                <button
-                  className={classes.button}
-                  onClick={passcodeBtnClickedHandler.bind(null, item)}
-                >
-                  {item}
-                </button>
-              </div>
-            );
-          })}
-        </div>
+      {/* <div> */}
+      <div className={classes.buttonsContainer}>
+        {buttonsText.map((item) => {
+          return (
+            <div className={classes.buttonContainer} key={item}>
+              <button
+                className={classes.button}
+                onClick={passcodeBtnClickedHandler.bind(null, item)}
+              >
+                {item}
+              </button>
+            </div>
+          );
+        })}
+        {/* </div> */}
       </div>
       <p>{message || <>&#10240;</>}</p>
     </div>
