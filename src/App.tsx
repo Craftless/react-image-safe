@@ -7,25 +7,18 @@ import ImageUrlPage from "./pages/ImageUrlPage";
 
 function App() {
   const [showPasscodeModal, setShowPasscodeModal] = useState(false);
-  const [enteredImageUrls, setEnteredImageUrls] = useState<string[]>([]);
+  const [enteredImageUrl, setEnteredImageUrl] = useState("");
 
-  console.log(enteredImageUrls);
+  console.log(enteredImageUrl);
 
   function formSubmitHandler(
     event: React.FormEvent<HTMLFormElement>,
-    ref: React.MutableRefObject<HTMLInputElement[]>
+    url: string
   ) {
-    console.log("Working");
     event.preventDefault();
     setShowPasscodeModal(true);
-    const urlArray: string[] = ref.current.reduce((prev, current) => {
-      prev.push(current.value);
-      return prev;
-    }, [] as string[]);
 
-    setEnteredImageUrls((current) => {
-      return [...current, ...urlArray];
-    });
+    setEnteredImageUrl(url);
   }
 
   function passcodeModalCloseHandler() {
