@@ -4,21 +4,18 @@ import Modal from "./components/ui/Modal";
 import PasscodePadFlex from "./components/functionality/PasscodePadFlex";
 import React, { useState } from "react";
 import ImageUrlPage from "./pages/ImageUrlPage";
+import CurrentDetailsProvider from "./store/CurrentDetailsProvider";
 
 function App() {
-  const [showPasscodeModal, setShowPasscodeModal] = useState(false);
-  const [enteredImageUrl, setEnteredImageUrl] = useState("");
-
-  console.log(enteredImageUrl);
-
-  function formSubmitHandler(
-    event: React.FormEvent<HTMLFormElement>,
-    url: string
-  ) {
-    event.preventDefault();
-    setShowPasscodeModal(true);
-
-    setEnteredImageUrl(url);
+  
+  async function formSubmitHandler() {
+    const response = await fetch('https://cyp-image-safe-default-rtdb.firebaseio.com/safe.json', {
+      method: 'POST',
+      body: JSON.stringify(meetup),
+      headers: {
+        'Content-Type': "application/json"
+      }
+    })
   }
 
   function passcodeModalCloseHandler() {
@@ -26,12 +23,14 @@ function App() {
   }
   return (
     <div className={classes.appContainer}>
-      <ImageUrlPage onSubmitForm={formSubmitHandler} />
-      {showPasscodeModal && (
-        <Modal onClose={passcodeModalCloseHandler}>
-          <PasscodePadFlex />
-        </Modal>
-      )}
+      <CurrentDetailsProvider>
+        <PasscodePadFlex />
+        {showPasscodeModal && (
+          <Modal onClose={passcodeModalCloseHandler}>
+            <ImageUrlPage onSubmitForm={formSubmitHandler} />
+          </Modal>
+        )}
+      </CurrentDetailsProvider>
     </div>
   );
 }

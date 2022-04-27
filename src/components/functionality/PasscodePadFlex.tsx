@@ -1,4 +1,5 @@
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
+import CurrentDetailsContext from "../../store/current-details-context";
 import classes from "./PasscodePadFlex.module.css";
 
 const buttonsText: string[] = [
@@ -21,6 +22,7 @@ function PasscodePadFlex() {
   const [message, setMessage] = useState("");
   const [enteredPasscode, setEnteredPasscode] = useState("");
   const inputBox = useRef<HTMLInputElement>(null);
+  const curDetailsCtx = useContext(CurrentDetailsContext);
 
   function passcodeBtnClickedHandler(type: string) {
     switch (type) {
@@ -29,8 +31,10 @@ function PasscodePadFlex() {
           setMessage("Please enter a passcode with a length greater than 4.");
           return;
         }
+        curDetailsCtx.setPasscode(enteredPasscode);
         break;
       case "Unlock":
+        curDetailsCtx.setPasscode(enteredPasscode);
         break;
       default:
         if (isNaN(+type)) {
