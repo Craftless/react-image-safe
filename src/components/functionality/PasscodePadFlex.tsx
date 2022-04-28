@@ -41,7 +41,7 @@ function PasscodePadFlex({
         onUpdateDetails({ type: "PASSCODE", data: enteredPasscode });
         break;
       case "Unlock":
-        curDetailsCtx.setPasscode(enteredPasscode);
+        
         break;
       default:
         if (isNaN(+type)) {

@@ -6,11 +6,13 @@ import React, { useEffect, useReducer, useState } from "react";
 export interface Details {
   passcode: string;
   imageUrl: string;
+  confirm: boolean;
 }
 
 const initialState = {
   passcode: "",
   imageUrl: "",
+  confirm: false,
 } as Details;
 
 function InputPage() {
@@ -19,27 +21,62 @@ function InputPage() {
 
   function detailsReducer(
     state: Details,
-    action: { type: "PASSCODE" | "CONFIRM_URL"; data: string }
-  ) {
-    switch (action.type) {
-      case "PASSCODE":
-        setShowImageUrlForm(true);
-        return {
-          passcode: action.data,
-          imageUrl: state.imageUrl,
-        } as Details;
-      case "CONFIRM_URL":
-        // formSubmitHandler();
-        return {
-          passcode: state.passcode,
-          imageUrl: action.data,
-        } as Details;
+    // action: { type: "PASSCODE" | "CONFIRM_URL"; data: string }
+    action: {
+      type: "LOCK" | "UNLOCK";
+      data: { type: "PASSCODE" | "URL"; passcode?: string; imageUrl?: string };
     }
+  ) {
+    // switch (action.type) {
+    //   case "PASSCODE":
+    //     setShowImageUrlForm(true);
+    //     return {
+    //       passcode: action.data,
+    //       imageUrl: state.imageUrl,
+    //       confirm: state.confirm,
+    //     } as Details;
+    //   case "CONFIRM_URL":
+    // // formSubmitHandler();
+    // return {
+    //   passcode: state.passcode,
+    //   imageUrl: action.data,
+    //   confirm: true,
+    // } as Details;
+    // }
+    switch (action.type) {
+      case "LOCK":
+        switch (action.data.type) {
+          case "PASSCODE":
+            setShowImageUrlForm(true);
+            return {
+              passcode: action.data,
+              imageUrl: state.imageUrl,
+              confirm: state.confirm,
+            } as Details;
+            break;
+          case "URL":
+            // formSubmitHandler();
+            return {
+              passcode: state.passcode,
+              imageUrl: action.data,
+              confirm: true,
+            } as Details;
+            break;
+        }
+        break;
+      case "UNLOCK":
+        switch (action.data.type) {
+          case "PASSCODE":
+            break;
+        }
+        break;
+    }
+
     return state;
   }
 
   useEffect(() => {
-    if (detailsState.imageUrl) formSubmitHandler();
+    if (detailsState.confirm && detailsState.imageUrl) formSubmitHandler();
   }, [detailsState.imageUrl]);
 
   async function formSubmitHandler() {
