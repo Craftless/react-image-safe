@@ -1,8 +1,6 @@
-import React, { useContext } from "react";
-import { useState } from "react";
+import React from "react";
 import Input from "../components/ui/Input";
 import useInput from "../hooks/use-input";
-import CurrentDetailsContext from "../store/current-details-context";
 import classes from "./ImageUrlForm.module.css";
 
 function ImageUrlForm({
@@ -11,8 +9,8 @@ function ImageUrlForm({
 }: {
   onSubmitForm: () => void;
   onUpdateDetails: React.Dispatch<{
-    type: "PASSCODE" | "CONFIRM_URL";
-    data: string;
+    type: "LOCK" | "UNLOCK";
+    data: { type: "PASSCODE" | "URL"; passcode?: string; imageUrl?: string };
   }>;
 }) {
   const {
@@ -21,14 +19,24 @@ function ImageUrlForm({
     isValid: imageUrlValid,
     inputTouchedHandler: imageUrlTouchedHandler,
     valueChangedHandler: imageUrlChangedHandler,
-  } = useInput((curVal) => curVal.match(/\.(jpeg|jpg|gif|png)$/) != null);
+    status
+  } = useInput(undefined); // curVal.match(/\.(jpeg|jpg|gif|png)$/) != null
 
-  const [preview, setPreview] = useState("");
-  const curDetailsCtx = useContext(CurrentDetailsContext);
+  // const isImageURL = require("image-url-validator").default;
+  // isImageURL("https://via.placeholder.com/300/09f/fff.png").then(
+  //   (is_image: boolean) => {
+  //     console.log(`IS Image: ${is_image}`); //=> true
+  //   }
+  // );
+
+  // const status = useValidateImageURL(enteredImageUrl);
 
   function formSubmitHandler(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    onUpdateDetails({ type: "CONFIRM_URL", data: enteredImageUrl });
+    onUpdateDetails({
+      type: "LOCK",
+      data: { type: "URL", imageUrl: enteredImageUrl },
+    });
   }
 
   return (
@@ -39,11 +47,16 @@ function ImageUrlForm({
             type="url"
             value={enteredImageUrl}
             onInputChanged={imageUrlChangedHandler}
+            onInputBlur={imageUrlTouchedHandler}
             id={Math.random().toFixed(3)}
+            showError={imageUrlHasError}
           >
             Image URL
           </Input>
-          <button type="submit">Confirm</button>
+          <button disabled={!imageUrlValid} type="submit">
+            Confirm
+          </button>
+          <p>{status}</p>
         </form>
         <div className={classes.previewContainer}>
           <img src={enteredImageUrl} alt="Preview" />

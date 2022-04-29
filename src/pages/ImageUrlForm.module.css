@@ -21,7 +21,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  flex: .2;
+  flex: 0.2;
   resize: both;
   padding: 16px;
   border-left: 1px solid gray;
@@ -76,6 +76,26 @@
 .form label {
   align-self: center;
   font-size: 1.5rem;
+}
+
+.form button {
+  padding: 1rem;
+  border: 0;
+  outline: 0;
+  border-radius: 8px;
+  font-size: 1.5rem;
+  margin: 16px;
+  align-self: stretch;
+  background-color: #4b0046;
+  color: white;
+  transition: 0.2s background-color;
+}
+
+.form button:disabled,
+.form button:disabled:hover,
+.form button:disabled:focus {
+  cursor: not-allowed;
+  background-color: gray;
 }
 
 button {

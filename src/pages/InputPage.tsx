@@ -9,6 +9,7 @@ export interface Details {
   confirm: boolean;
 }
 
+
 const initialState = {
   passcode: "",
   imageUrl: "",
@@ -27,41 +28,23 @@ function InputPage() {
       data: { type: "PASSCODE" | "URL"; passcode?: string; imageUrl?: string };
     }
   ) {
-    // switch (action.type) {
-    //   case "PASSCODE":
-    //     setShowImageUrlForm(true);
-    //     return {
-    //       passcode: action.data,
-    //       imageUrl: state.imageUrl,
-    //       confirm: state.confirm,
-    //     } as Details;
-    //   case "CONFIRM_URL":
-    // // formSubmitHandler();
-    // return {
-    //   passcode: state.passcode,
-    //   imageUrl: action.data,
-    //   confirm: true,
-    // } as Details;
-    // }
     switch (action.type) {
       case "LOCK":
         switch (action.data.type) {
           case "PASSCODE":
             setShowImageUrlForm(true);
             return {
-              passcode: action.data,
+              passcode: action.data.passcode,
               imageUrl: state.imageUrl,
               confirm: state.confirm,
             } as Details;
-            break;
           case "URL":
             // formSubmitHandler();
             return {
               passcode: state.passcode,
-              imageUrl: action.data,
+              imageUrl: action.data.imageUrl,
               confirm: true,
             } as Details;
-            break;
         }
         break;
       case "UNLOCK":
@@ -75,18 +58,17 @@ function InputPage() {
     return state;
   }
 
-  useEffect(() => {
-    if (detailsState.confirm && detailsState.imageUrl) formSubmitHandler();
-  }, [detailsState.imageUrl]);
-
-  async function formSubmitHandler() {
+  const formSubmitHandler = React.useCallback(async () => {
     if (!detailsState.passcode) console.log("SADNOFODISN");
     try {
       const response = await fetch(
         "https://cyp-image-safe-default-rtdb.firebaseio.com/safe.json",
         {
           method: "POST",
-          body: JSON.stringify(detailsState),
+          body: JSON.stringify({
+            passcode: detailsState.passcode,
+            url: detailsState.imageUrl,
+          }),
           headers: {
             "Content-Type": "application/json",
           },
@@ -102,7 +84,13 @@ function InputPage() {
     } catch (e) {
       console.log(e);
     }
-  }
+  }, [detailsState.passcode, detailsState.imageUrl]);
+
+  useEffect(() => {
+    if (detailsState.confirm && detailsState.imageUrl) formSubmitHandler();
+  }, [detailsState.imageUrl, detailsState.confirm, formSubmitHandler]);
+
+ 
 
   function modalCloseHandler() {
     setShowImageUrlForm(false);

@@ -1,3 +1,11 @@
 .outerContainer {
   margin-bottom: 8px;
 }
+
+.error {
+  background-color: red;
+}
+
+.error input {
+  color: red;
+}
