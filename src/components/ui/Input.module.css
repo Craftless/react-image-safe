@@ -3,9 +3,37 @@
 }
 
 .error {
-  background-color: red;
+  /* background-color: red; */
 }
 
 .error input {
-  color: red;
+  /* color: red; */
+  border-bottom-color: red;
+}
+
+
+.input {
+  border: 0;
+  border-radius: 0;
+  background: 0;
+  outline: 0;
+  border-bottom: 0.1rem solid gray;
+  padding: 0.5rem;
+  width: 60%;
+  transition: 0.2s border-bottom-color;
+  color: var(--text);
+  font-size: 1.5rem;
+}
+
+.input:focus :not(.error) {
+  border-bottom-color: green;
+}
+
+@media only screen and (max-width: 768px) {
+  .outerContainer {
+    width: 100%;
+  }
+  .input {
+    width: 100%;
+  }
 }

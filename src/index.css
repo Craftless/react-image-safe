@@ -1,15 +1,44 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap");
+
+:root {
+  --primary: #6200ee;
+  --accent: #03dac4;
+  --background: #cccccc; /* f6f6f6 */
+  --surface: white;
+  --button: rgba(0, 0, 0, 0.26);
+  --error: #b00020;
+  --text: black;
+  --onSurface: #000000;
+  --disabled: rgba(0, 0, 0, 0.26);
+  --placeholder: rgba(0, 0, 0, 0.54);
+  --backdrop: rgba(0, 0, 0, 0.5);
+  --notification: #920044;
+}
+
+[data-theme="dark"] {
+  --primary: #bb86fc;
+  --accent: #03dac6;
+  --background: #121212;
+  --surface: #121212;
+  --button: rgba(255, 255, 255, 0.2);
+  --error: #cf6679;
+  --onSurface: #ffffff;
+  --text: white;
+  --disabled: rgba(255, 255, 255, 0.38);
+  --placeholder: rgba(255, 255, 255, 0.54);
+  --backdrop: rgba(0, 0, 0, 0.5);
+  --notification: #920044;
+}
 
 * {
   box-sizing: border-box;
 }
 
 html {
-  font-family: 'Noto Sans JP', sans-serif;
+  font-family: "Noto Sans JP", sans-serif;
 }
 
 body {
   margin: 0;
-  background-color: #3f3f3f;
+  /* background-color: #3f3f3f; */
 }
-

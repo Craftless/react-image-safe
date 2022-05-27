@@ -34,14 +34,12 @@ function InputPage() {
           case "PASSCODE":
             setShowImageUrlForm(true);
             return {
+              ...state,
               passcode: action.data.passcode,
-              imageUrl: state.imageUrl,
-              confirm: state.confirm,
             } as Details;
           case "URL":
-            // formSubmitHandler();
             return {
-              passcode: state.passcode,
+              ...state,
               imageUrl: action.data.imageUrl,
               confirm: true,
             } as Details;

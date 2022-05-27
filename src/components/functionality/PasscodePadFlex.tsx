@@ -78,6 +78,11 @@ function PasscodePadFlex({
           value={enteredPasscode}
           readOnly
         />
+        <button className={classes.clearButton} onClick={() => {
+          setEnteredPasscode("");
+        }}>
+          &#10005;
+        </button>
       </div>
       {/* <div> */}
       <div className={classes.buttonsContainer}>

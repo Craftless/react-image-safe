@@ -31,6 +31,7 @@ const Input = ({
         onChange={onInputChanged}
         onBlur={onInputBlur}
         id={`url-input${id}`}
+        className={classes.input}
       />
     </div>
   );

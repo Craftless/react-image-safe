@@ -1,0 +1,27 @@
+/* :root {
+  --primary: '#6200ee';
+  --accent: '#03dac4';
+  --background: '#f6f6f6';
+  --surface: white;
+  --error: '#B00020';
+  --text: black;
+  --onSurface: '#000000';
+  --disabled: rgba(0, 0, 0, 0.26);
+  --placeholder: rgba(0, 0, 0, 0.54);
+  --backdrop: rgba(0, 0, 0, 0.5);
+  --notification: #920044;
+}
+
+[data-theme='dark'] {
+  --primary: '#BB86FC';
+  --accent: '#03dac6';
+  --background: '#121212';
+  --surface: '#121212';
+  --error: '#CF6679';
+  --onSurface: '#FFFFFF';
+  --text: white;
+  --disabled: rgba(255, 255, 255, 0.38);
+  --placeholder: rgba(255, 255, 255, 0.54);
+  --backdrop: rgba(0, 0, 0, 0.5);;
+  --notification: #920044;
+} */

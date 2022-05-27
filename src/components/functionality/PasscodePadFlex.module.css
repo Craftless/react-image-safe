@@ -16,14 +16,17 @@
   justify-content: center;
   border-bottom: 1px solid gray;
   padding: 6px;
+  flex-wrap: wrap;
 }
 .passcodeTextContainer label {
   font-family: inherit;
   font-size: 2rem;
+  color: var(--text)
 }
 
 .passcodeText {
   border: 0;
+  border-radius: 0;
   border-bottom: 1px solid gray;
   background: 0;
   font-family: inherit;
@@ -31,12 +34,25 @@
   font-size: 2rem;
   transition: 0.2s border-bottom-color;
   overflow-x: auto;
+  width: 30%;
+  color: var(--text)
 }
 
+
 .buttonsContainer {
-  margin-top: 1rem;
+  margin-top: 24px;
   display: flex;
   flex-wrap: wrap;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.clearButton {
+  background: 0;
+  border: 0;
+  outline: 0;
+  font-size: 2rem;
+  color: var(--text);
 }
 
 .buttonContainer {
@@ -62,12 +78,21 @@
   height: 100%;
   width: 100%;
   font-weight: bold;
-  font-size: 1rem;
+  font-size: 1.5rem;
+  background: var(--button);
+  border: 0;
+  /* border-radius: 5px; */
 
   display: flex; /* added for centered text */
   justify-content: center; /* added for centered text */
   align-items: center; /* added for centered text */
+  color: var(--text)
 }
+
+.button:active {
+  background-color: #949494;
+}
+
 /*
 
 .buttonsContainer {
@@ -110,4 +135,14 @@
 
 .invalid {
   border-bottom-color: red;
+}
+
+
+@media only screen and (max-width: 768px) {
+  .passcodeTextContainer label, .passcodeText {
+    font-size: 1.2rem;
+  }
+  .passcodeText {
+    flex: 1;
+  }
 }

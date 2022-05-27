@@ -1,7 +1,6 @@
 .outerContainer {
   display: flex;
-  padding: 16px;
-  margin: 16px;
+  padding: 8px;
   justify-content: center;
   align-items: stretch;
   width: 100%;
@@ -14,7 +13,7 @@
   flex: 1;
   justify-content: center;
   flex-direction: row;
-  padding: 32px;
+  width: 100%;
 }
 
 .previewContainer {
@@ -51,31 +50,16 @@
   flex: 1;
   justify-content: center;
   align-items: center;
-  color: white;
+  color: var(--text);
   flex-direction: column;
-  margin: 16px;
-}
-
-.form input {
-  border: 0;
-  background: 0;
-  outline: 0;
-  border-bottom: 0.1rem solid gray;
-  margin: 0 1rem;
-  padding: 0.5rem;
-  width: 60%;
-  transition: 0.2s border-bottom-color;
-  color: white;
-  font-size: 1.5rem;
-}
-
-.form input:focus {
-  border-bottom-color: green;
+  margin: 8px;
+  width: 100%;
 }
 
 .form label {
   align-self: center;
   font-size: 1.5rem;
+  color: var(--text)
 }
 
 .form button {
@@ -87,7 +71,7 @@
   margin: 16px;
   align-self: stretch;
   background-color: #4b0046;
-  color: white;
+  color: var(--text);
   transition: 0.2s background-color;
 }
 

@@ -1,6 +1,6 @@
 import React from "react";
 import Input from "../components/ui/Input";
-import useInput from "../hooks/use-input";
+import useImageInput from "../hooks/use-image-input";
 import classes from "./ImageUrlForm.module.css";
 
 function ImageUrlForm({
@@ -20,7 +20,7 @@ function ImageUrlForm({
     inputTouchedHandler: imageUrlTouchedHandler,
     valueChangedHandler: imageUrlChangedHandler,
     status
-  } = useInput(undefined); // curVal.match(/\.(jpeg|jpg|gif|png)$/) != null
+  } = useImageInput(); // curVal.match(/\.(jpeg|jpg|gif|png)$/) != null
 
   // const isImageURL = require("image-url-validator").default;
   // isImageURL("https://via.placeholder.com/300/09f/fff.png").then(

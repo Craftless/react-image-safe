@@ -14,7 +14,7 @@
   left: 5%;
   width: 90%;
   padding: 1rem;
-  background-color: #ccc;
+  background-color: var(--surface);
   border-radius: 16px;
   min-height: 80vh;
   max-height: 80vh;

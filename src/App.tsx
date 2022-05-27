@@ -1,28 +1,36 @@
 import classes from "./App.module.css";
-import React, { useRef } from "react";
+import { useRef, useState } from "react";
 
 import InputPage from "./pages/InputPage";
+import { ThemeContextProvider } from "./store/theme-context";
 
 function App() {
+  const [theme, setTheme] = useState("light" as "light" | "dark");
+
   const imageRef = useRef<HTMLImageElement>();
   if (imageRef?.current) {
     imageRef.current.onload = () => {
       console.log("LOADED");
-    }
+    };
     imageRef.current.onerror = () => {
       console.log("FAILED");
-    }
+    };
   }
 
   return (
-    <div className={classes.appContainer}>
-      <InputPage />
-      <img
-        src="https://picsum.photos/129031283192"
-        width={400}
-        ref={imageRef as React.MutableRefObject<HTMLImageElement>}
-      />
-    </div>
+    <ThemeContextProvider>
+      <div className={classes.appContainer} data-theme={theme}>
+        <InputPage />
+        <button
+          onClick={() => {
+            setTheme("dark");
+          }}
+        >
+          Change theme
+        </button>
+        {theme}
+      </div>
+    </ThemeContextProvider>
   );
 }
 
