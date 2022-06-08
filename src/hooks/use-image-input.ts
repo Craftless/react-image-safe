@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 
+let currentImg: HTMLImageElement | null = null;
+
 function useImageInput() {
   const [enteredValue, setEnteredValue] = useState("");
   const [isTouched, setIsTouched] = useState(false);
@@ -8,11 +10,18 @@ function useImageInput() {
   useEffect(() => {
     const image = new Image();
     image.src = enteredValue;
-    image.addEventListener("load", () => {
-      setStatus(true);
+    currentImg = image;
+    image.addEventListener("load", (event) => {
+      if (currentImg === event.target) {
+        setStatus(true);
+        currentImg = null;
+      }
     });
-    image.addEventListener("error", () => {
-      setStatus(false);
+    image.addEventListener("error", (event) => {
+      if (currentImg === event.target) {
+        setStatus(false);
+        currentImg = null;
+      }
     });
   }, [enteredValue]);
 
@@ -38,7 +47,7 @@ function useImageInput() {
     hasError,
     valueChangedHandler,
     inputTouchedHandler,
-    status
+    status,
   };
 }
 

@@ -1,4 +1,7 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
+import { ThemeContext } from "../../store/theme-context";
+import LoadingSpinner from "../ui/LoadingSpinner";
+import Switch from "../ui/Switch";
 import classes from "./PasscodePadFlex.module.css";
 
 const buttonsText: string[] = [
@@ -16,27 +19,30 @@ const buttonsText: string[] = [
   "Unlock",
 ];
 
-let showError = false;
 function PasscodePadFlex({
   onUpdateDetails,
 }: {
-  onUpdateDetails: React.Dispatch<{
-    type: "LOCK" | "UNLOCK";
-    data: { type: "PASSCODE" | "URL"; passcode?: string; imageUrl?: string };
-  }>;
+  onUpdateDetails: (object: { passcode?: string; url?: string }) => void;
 }) {
   const [message, setMessage] = useState("");
   const [enteredPasscode, setEnteredPasscode] = useState("");
+  const [touched, setTouched] = useState(false);
   const inputBox = useRef<HTMLInputElement>(null);
+  const themeCtx = useContext(ThemeContext);
+
+  function reset() {}
 
   function passcodeBtnClickedHandler(type: string) {
+    setTouched(true);
     switch (type) {
       case "Lock":
         if (enteredPasscode.trim().length < 4) {
           setMessage("Please enter a passcode with a length greater than 4.");
           return;
         }
-        onUpdateDetails({ type: "LOCK", data: { type: "PASSCODE", passcode: enteredPasscode }});
+        onUpdateDetails({
+          passcode: enteredPasscode,
+        });
         break;
       case "Unlock":
         break;
@@ -51,7 +57,6 @@ function PasscodePadFlex({
           inputBox.current.scrollLeft = inputBox.current.scrollWidth;
         break;
     }
-    showError = true;
   }
 
   function checkForValidity() {
@@ -67,7 +72,7 @@ function PasscodePadFlex({
         <label htmlFor="passcode-field">Passcode:</label>
         <input
           className={`${classes.passcodeText} ${
-            showError
+            touched
               ? checkForValidity()
                 ? classes.valid
                 : classes.invalid
@@ -78,13 +83,24 @@ function PasscodePadFlex({
           value={enteredPasscode}
           readOnly
         />
-        <button className={classes.clearButton} onClick={() => {
-          setEnteredPasscode("");
-        }}>
+        <button
+          className={classes.clearButton}
+          onClick={() => {
+            setEnteredPasscode("");
+          }}
+        >
           &#10005;
         </button>
       </div>
       {/* <div> */}
+      <Switch
+        onInput={(e) => {
+          const el = e.target as HTMLInputElement;
+          console.log(el.checked);
+          themeCtx.changeTheme(el.checked);
+        }}
+      />
+
       <div className={classes.buttonsContainer}>
         {buttonsText.map((item) => {
           return (

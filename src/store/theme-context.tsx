@@ -2,21 +2,25 @@ import React, { createContext, useState } from "react";
 
 interface IThemeContext {
   theme: "light" | "dark";
-  toggleTheme: () => void;
+  changeTheme: (dark?: boolean) => void;
 }
 
-const ThemeContext = createContext({
+export const ThemeContext = createContext({
   theme: "light",
-  toggleTheme: () => {},
+  changeTheme: (dark?: boolean) => {},
 } as IThemeContext);
 
 export function ThemeContextProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState("light" as "light" | "dark");
-  function toggleTheme() {
+  function changeTheme(dark?: boolean) {
+    if (dark !== undefined) {
+      setTheme(dark ? "dark" : "light");
+      return;
+    }
     setTheme(theme === "light" ? "dark" : "light");
   }
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+    <ThemeContext.Provider value={{ theme, changeTheme }}>
       {children}
     </ThemeContext.Provider>
   );

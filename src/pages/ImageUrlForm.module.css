@@ -1,3 +1,7 @@
+button {
+  color: var(--text);
+}
+
 .outerContainer {
   display: flex;
   padding: 8px;
@@ -70,7 +74,7 @@
   font-size: 1.5rem;
   margin: 16px;
   align-self: stretch;
-  background-color: #4b0046;
+  background-color: var(--primary);
   color: var(--text);
   transition: 0.2s background-color;
 }
@@ -79,7 +83,7 @@
 .form button:disabled:hover,
 .form button:disabled:focus {
   cursor: not-allowed;
-  background-color: gray;
+  background-color: var(--disabled);
 }
 
 button {

@@ -8,10 +8,7 @@ function ImageUrlForm({
   onUpdateDetails,
 }: {
   onSubmitForm: () => void;
-  onUpdateDetails: React.Dispatch<{
-    type: "LOCK" | "UNLOCK";
-    data: { type: "PASSCODE" | "URL"; passcode?: string; imageUrl?: string };
-  }>;
+  onUpdateDetails: (object: { passcode?: string; url?: string }) => void;
 }) {
   const {
     value: enteredImageUrl,
@@ -19,7 +16,7 @@ function ImageUrlForm({
     isValid: imageUrlValid,
     inputTouchedHandler: imageUrlTouchedHandler,
     valueChangedHandler: imageUrlChangedHandler,
-    status
+    status,
   } = useImageInput(); // curVal.match(/\.(jpeg|jpg|gif|png)$/) != null
 
   // const isImageURL = require("image-url-validator").default;
@@ -34,8 +31,7 @@ function ImageUrlForm({
   function formSubmitHandler(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     onUpdateDetails({
-      type: "LOCK",
-      data: { type: "URL", imageUrl: enteredImageUrl },
+      url: enteredImageUrl,
     });
   }
 
@@ -59,7 +55,11 @@ function ImageUrlForm({
           <p>{status}</p>
         </form>
         <div className={classes.previewContainer}>
-          <img src={enteredImageUrl} alt="Preview" />
+          {imageUrlValid ? (
+            <img src={enteredImageUrl} alt="Preview" />
+          ) : (
+            "URL is invalid"
+          )}
         </div>
       </div>
     </div>

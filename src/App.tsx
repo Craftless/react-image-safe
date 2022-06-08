@@ -1,11 +1,13 @@
 import classes from "./App.module.css";
-import { useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 
 import InputPage from "./pages/InputPage";
-import { ThemeContextProvider } from "./store/theme-context";
+import { ThemeContext, ThemeContextProvider } from "./store/theme-context";
+import { Provider } from "react-redux";
+import store from "./store/redux/store";
 
-function App() {
-  const [theme, setTheme] = useState("light" as "light" | "dark");
+function Root() {
+  const themeCtx = useContext(ThemeContext)
 
   const imageRef = useRef<HTMLImageElement>();
   if (imageRef?.current) {
@@ -16,21 +18,32 @@ function App() {
       console.log("FAILED");
     };
   }
+  useEffect(() => {
+    console.log("HELP");
+  }, []);
 
   return (
-    <ThemeContextProvider>
-      <div className={classes.appContainer} data-theme={theme}>
-        <InputPage />
-        <button
-          onClick={() => {
-            setTheme("dark");
-          }}
-        >
-          Change theme
-        </button>
-        {theme}
-      </div>
-    </ThemeContextProvider>
+    <div className={classes.appContainer} data-theme={themeCtx.theme}>
+      <InputPage />
+      {/* <button
+        onClick={() => {
+          themeCtx.toggleTheme();
+        }}
+      >
+        Change theme
+      </button>
+      {themeCtx.theme} */}
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <Provider store={store}>
+      <ThemeContextProvider>
+        <Root />
+      </ThemeContextProvider>
+    </Provider>
   );
 }
 
