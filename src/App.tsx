@@ -7,7 +7,7 @@ import InputPage from "./pages/InputPage";
 import { ThemeContext, ThemeContextProvider } from "./store/theme-context";
 import { Provider } from "react-redux";
 import store from "./store/redux/store";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function Root() {
@@ -25,15 +25,21 @@ function Root() {
   useEffect(() => {
     console.log("HELP");
   }, []);
-
-  // toast("Success!", {
-  //   position: "bottom-center",
-  // });
-
+  
   return (
     <div className={classes.appContainer} data-theme={themeCtx.theme}>
       <InputPage />
-      <ToastContainer />
+      <ToastContainer
+        theme={themeCtx.theme}
+        toastStyle={{ backgroundColor: themeCtx.toastColour }}
+      />
+      <button
+        onClick={() => {
+          toast.success("NOO");
+        }}
+      >
+        IODSF
+      </button>
     </div>
   );
 }

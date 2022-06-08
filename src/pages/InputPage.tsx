@@ -2,26 +2,14 @@ import Modal from "../components/ui/Modal";
 import PasscodePadFlex from "../components/functionality/PasscodePadFlex";
 import ImageUrlForm from "./ImageUrlForm";
 import { useEffect, useState } from "react";
-import { ref, set } from "firebase/database";
+import { get, ref, set } from "firebase/database";
 import { projectDb } from "../firebase/config";
 import { useAppSelector } from "../hooks/redux";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
 import { FirebaseError } from "firebase/app";
 
-import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
-
-// export interface Details {
-//   passcode: string;
-//   imageUrl: string;
-//   confirm: boolean;
-// }
-
-// const initialState = {
-//   passcode: "",
-//   imageUrl: "",
-//   confirm: false,
-// } as Details;
+import "react-toastify/dist/ReactToastify.css";
 
 function InputPage() {
   const [showImageUrlForm, setShowImageUrlForm] = useState(false);
@@ -62,11 +50,6 @@ function InputPage() {
     }
   }
 
-
-  // useEffect(() => {
-  //   if (detailsState.confirm && detailsState.imageUrl) formSubmitHandler();
-  // }, [detailsState.imageUrl, detailsState.confirm, formSubmitHandler]);
-
   function updateDetails(object: { passcode?: string; url?: string }) {
     setDetails((cur) => {
       return {
@@ -78,6 +61,11 @@ function InputPage() {
       console.log("SECOND");
       setShowImageUrlForm(true);
     }
+  }
+
+  async function unlock(passcode: string) {
+    const data = await get(ref(projectDb, `/safe/${passcode}`));
+    console.log(data.val().url);
   }
 
   useEffect(() => {
@@ -102,12 +90,10 @@ function InputPage() {
         <LoadingSpinner />
       ) : (
         <>
-          <PasscodePadFlex onUpdateDetails={updateDetails} />
+          <PasscodePadFlex onUpdateDetails={updateDetails} onUnlock={unlock} />
           {showImageUrlForm && (
             <Modal onClose={modalCloseHandler}>
-              <ImageUrlForm
-                onUpdateDetails={updateDetails}
-              />
+              <ImageUrlForm onUpdateDetails={updateDetails} />
             </Modal>
           )}
         </>

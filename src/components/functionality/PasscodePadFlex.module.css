@@ -14,8 +14,8 @@
   align-self: stretch;
   align-items: center;
   justify-content: center;
-  border-bottom: 1px solid gray;
-  padding: 6px;
+  border-bottom: 2px solid var(--placeholder);
+  padding: 16px;
   flex-wrap: wrap;
 }
 .passcodeTextContainer label {
@@ -29,12 +29,14 @@
   border-radius: 0;
   border-bottom: 1px solid gray;
   background: 0;
+  outline: none;
   font-family: inherit;
   font-weight: bold;
   font-size: 2rem;
   transition: 0.2s border-bottom-color;
   overflow-x: auto;
   width: 30%;
+  margin: 0px 1rem;
   color: var(--text)
 }
 

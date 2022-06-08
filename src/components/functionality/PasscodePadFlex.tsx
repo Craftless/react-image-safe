@@ -4,6 +4,9 @@ import LoadingSpinner from "../ui/LoadingSpinner";
 import Switch from "../ui/Switch";
 import classes from "./PasscodePadFlex.module.css";
 
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const buttonsText: string[] = [
   "1",
   "2",
@@ -21,23 +24,22 @@ const buttonsText: string[] = [
 
 function PasscodePadFlex({
   onUpdateDetails,
+  onUnlock,
 }: {
   onUpdateDetails: (object: { passcode?: string; url?: string }) => void;
+  onUnlock: (passcode: string) => void
 }) {
-  const [message, setMessage] = useState("");
   const [enteredPasscode, setEnteredPasscode] = useState("");
   const [touched, setTouched] = useState(false);
   const inputBox = useRef<HTMLInputElement>(null);
   const themeCtx = useContext(ThemeContext);
-
-  function reset() {}
 
   function passcodeBtnClickedHandler(type: string) {
     setTouched(true);
     switch (type) {
       case "Lock":
         if (enteredPasscode.trim().length < 4) {
-          setMessage("Please enter a passcode with a length greater than 4.");
+          toast.warn("Please enter a passcode with a length greater than 4.");
           return;
         }
         onUpdateDetails({
@@ -45,14 +47,18 @@ function PasscodePadFlex({
         });
         break;
       case "Unlock":
+        if (enteredPasscode.trim().length < 4) {
+          toast.warn("Please enter a passcode with a length greater than 4.");
+          return;
+        }
+        onUnlock(enteredPasscode);
         break;
       default:
         if (isNaN(+type)) {
-          setMessage("Please enter a valid number");
+          toast.warn("Please enter a valid number");
           return;
         }
         setEnteredPasscode((current) => current + type);
-        setMessage("");
         if (inputBox.current)
           inputBox.current.scrollLeft = inputBox.current.scrollWidth;
         break;
@@ -114,9 +120,7 @@ function PasscodePadFlex({
             </div>
           );
         })}
-        {/* </div> */}
       </div>
-      <p>{message || <>&#10240;</>}</p>
     </div>
   );
 }

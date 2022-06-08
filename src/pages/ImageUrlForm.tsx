@@ -38,12 +38,15 @@ function ImageUrlForm({
       <div className={classes.formContainer}>
         <form onSubmit={formSubmitHandler} className={classes.form}>
           <Input
-            type="url"
             value={enteredImageUrl}
             onInputChanged={imageUrlChangedHandler}
             onInputBlur={imageUrlTouchedHandler}
             id={Math.random().toFixed(3)}
             showError={imageUrlHasError}
+            inputProps={{
+              type: "url",
+              autoFocus: true,
+            }}
           >
             Image URL
           </Input>
