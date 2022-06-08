@@ -4,10 +4,8 @@ import useImageInput from "../hooks/use-image-input";
 import classes from "./ImageUrlForm.module.css";
 
 function ImageUrlForm({
-  onSubmitForm,
   onUpdateDetails,
 }: {
-  onSubmitForm: () => void;
   onUpdateDetails: (object: { passcode?: string; url?: string }) => void;
 }) {
   const {

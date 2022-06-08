@@ -8,6 +8,9 @@ import { useAppSelector } from "../hooks/redux";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
 import { FirebaseError } from "firebase/app";
 
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
+
 // export interface Details {
 //   passcode: string;
 //   imageUrl: string;
@@ -29,44 +32,6 @@ function InputPage() {
     {} as { passcode: string; url: string }
   );
 
-  // const [detailsState, dispatch] = useReducer(detailsReducer, initialState);
-
-  // function detailsReducer(
-  //   state: Details,
-  //   // action: { type: "PASSCODE" | "CONFIRM_URL"; data: string }
-  //   action: {
-  //     type: "LOCK" | "UNLOCK";
-  //     data: { type: "PASSCODE" | "URL"; passcode?: string; imageUrl?: string };
-  //   }
-  // ) {
-  //   switch (action.type) {
-  //     case "LOCK":
-  //       switch (action.data.type) {
-  //         case "PASSCODE":
-  //           setShowImageUrlForm(true);
-  //           return {
-  //             ...state,
-  //             passcode: action.data.passcode,
-  //           } as Details;
-  //         case "URL":
-  //           return {
-  //             ...state,
-  //             imageUrl: action.data.imageUrl,
-  //             confirm: true,
-  //           } as Details;
-  //       }
-  //       break;
-  //     case "UNLOCK":
-  //       switch (action.data.type) {
-  //         case "PASSCODE":
-  //           break;
-  //       }
-  //       break;
-  //   }
-
-  //   return state;
-  // }
-
   async function saveToDb({
     passcode,
     url,
@@ -80,52 +45,23 @@ function InputPage() {
         passcode,
         url,
       });
-      alert("Successful.");
+      toast.success("Success!");
     } catch (e) {
       let message;
       const error = e as FirebaseError;
-      alert(error.code);
       if (error.code) {
-        switch(error.code) {
+        switch (error.code) {
           case "PERMISSION_DENIED":
-            message = "You do not have sufficient permissions to do this. You probably were trying to override"
+            message =
+              "You do not have sufficient permissions to do this. This is probably because the passcode you used is taken.";
         }
-        alert(error.code);
       }
-      console.log("An error occurred", e);
-      alert(`Unsuccessful: ${e}`);
+      toast.error(`Unsuccessful! ${message}`);
     } finally {
       setIsLoading(false);
     }
   }
 
-  const formSubmitHandler = async () => {
-    if (!details.passcode) console.log("SADNOFODISN");
-    // try {
-    //   const response = await fetch(
-    //     "https://cyp-image-safe-default-rtdb.firebaseio.com/safe.json",
-    //     {
-    //       method: "POST",
-    //       body: JSON.stringify({
-    //         passcode: details.passcode,
-    //         url: details.url,
-    //       }),
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //     }
-    //   );
-
-    //   const data = await response.json();
-
-    //   if (!response.ok) {
-    //     let errorMessage = "Something went wrong!";
-    //     throw new Error(data?.error?.message || errorMessage);
-    //   }
-    // } catch (e) {
-    //   console.log(e);
-    // }
-  };
 
   // useEffect(() => {
   //   if (detailsState.confirm && detailsState.imageUrl) formSubmitHandler();
@@ -170,7 +106,6 @@ function InputPage() {
           {showImageUrlForm && (
             <Modal onClose={modalCloseHandler}>
               <ImageUrlForm
-                onSubmitForm={formSubmitHandler}
                 onUpdateDetails={updateDetails}
               />
             </Modal>
